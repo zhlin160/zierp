@@ -11,7 +11,7 @@ use think\Model;
 /**
  * 会员模型
  */
-class UcenterMember extends Model{
+class AdminUser extends Model{
 
 	/* 用户模型自动完成 */
 	protected $auto = ['update_time','status'];

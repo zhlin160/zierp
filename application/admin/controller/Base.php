@@ -6,7 +6,7 @@ class Base extends Controller{
 	public function _initialize(){
 		// 判断是否登录，没有登录跳转登录页面
 		if(!session('user_auth') || !session('user_auth_sign')){
-			$this->redirect('index/index');
+			$this->redirect('Login/index');
 		}
 		$dispatch = $this->request->dispatch();
 		$activeRouter = $dispatch['module']['0'] . '/' . $dispatch['module'][1] . '/' . $dispatch['module'][2];

@@ -21,6 +21,13 @@
         .loginbox-textbox img{
             width: 100%;
         }
+        .tpcode{
+            width:45%;float:left;display: inline-block;
+        }
+        .tpcode_img{
+            width: 45% !important;
+            margin-left: 10px;
+        }
     </style>
 </head>
 <!--Head Ends-->
@@ -28,24 +35,22 @@
 
 <body>
     <div class="login-container animated fadeInDown">
-        <form action="" method="post">
+        <form action="" method="post" id="login_from" >
             <div class="loginbox bg-white">
                 <div class="loginbox-title">ZIERP 系统登录</div>
                 <div class="loginbox-textbox">
-                    <input type="text" class="form-control" placeholder="username" name="username" />
+                    <input type="text" class="form-control" placeholder="用户名" name="username" />
                 </div>
                 <div class="loginbox-textbox">
-                    <input type="password" class="form-control" placeholder="password" name="password" />
+                    <input type="password" class="form-control" placeholder="密码" name="password" />
                 </div>
                 <div class="loginbox-textbox">
-                    <input type="code" class="form-control" placeholder="验证码" name="code">
-                </div>
-                <div class="loginbox-textbox">
-                    <img src="/admin/index/captcha?t={:rand(10000,99999)}" alt="" onclick="this.src='/admin/index/captcha'+'?t='+Math.random()">
+                    <input type="code" class="form-control tpcode" placeholder="验证码" name="code" >
+                    <img src="{:captcha_src()}?t={:rand(10000,99999)}" class="tpcode_img" alt="" onclick="this.src='{:captcha_src()}?t='+Math.random()">
                 </div>
 
                 <div class="loginbox-submit">
-                    <input type="submit" class="btn btn-primary btn-block" value="Login">
+                    <input type="button" id="login" class="btn btn-primary btn-block" value="登录">
                 </div>
             </div>
         </form>
@@ -56,7 +61,51 @@
     <script src="/assets/js/slimscroll/jquery.slimscroll.min.js"></script>
     <!--Beyond Scripts-->
     <script src="/assets/js/beyond.js"></script>
+    <script src="/assets/js/layer.js"></script>
+
+    <script>
+        //按键盘回车登录
+        $(document).keydown(function(e){
+            if(e.keyCode == 13){
+                login();
+            }
+        })
+
+        $('#login').click(function(){
+            login();
+        })
+        function login(){
+            if($('input[name="username"]').val() == ''){
+                layer.alert('用户名不能为空!');
+                return false;
+            }
+            if($('input[name="password"]').val() == ''){
+                layer.alert('密码不能为空！');
+                return false;
+            }
+            if($('input[name="code"]').val() == ''){
+                layer.alert('验证码不能空！');
+                return false;
+            }
+            $.ajax({
+                url:"{:url('Login/index')}",
+                type:'post',
+                data:$('#login_from').serialize(),
+                success:function(data){
+                    if(data.code == 0){
+                        layer.msg(data.msg,{end:function(){
+                            window.location.href = "{:url('Index/index')}"
+                        }})
+                    }else{
+                        layer.msg(data.msg,{time:1000,end:function(){
+                            $(".tpcode_img").attr('src','{:captcha_src()}?t='+Math.random())
+                        }});
+                    }
+                }
+            })
+        }
+    </script>
 </body>
-<!--Body Ends-->
+
 
 </html>

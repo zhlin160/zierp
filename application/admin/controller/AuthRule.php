@@ -10,7 +10,7 @@ class AuthRule extends Base{
 	 * @return   [type]                   [description]
 	 */
 	public function index(){
-		$authRuleData = \think\Db::query('select id,name,title,pid,sort,path,type,icon,concat(path,"-",id) as bpath from auth_rule where status=1 order by bpath');
+		$authRuleData = \think\Db::query('select id,name,title,pid,sort,path,type,icon,concat(path,"-",id) as bpath from zi_auth_rule where status=1 order by bpath');
 		foreach ($authRuleData as $key => $value) {
 			$authRuleData[$key]['count'] = count(explode('-', $value['path']));
 		}
@@ -39,7 +39,7 @@ class AuthRule extends Base{
 				return $this->error($authRuleModel->getError());
 			}
 		}else{
-			$pidData = \think\Db::query('select id,title,path,concat(path,"-",id) as bpath from auth_rule where status=1 and type=1 and is_show=1 order by bpath');
+			$pidData = \think\Db::query('select id,title,path,concat(path,"-",id) as bpath from zi_auth_rule where status=1 and type=1 and is_show=1 order by bpath');
 			foreach ($pidData as $key => $value) {
 				$pidData[$key]['count'] = count(explode('-', $value['path']));
 			}
@@ -78,7 +78,7 @@ class AuthRule extends Base{
 				return $this->error('参数错误');
 			}
 			$data = \think\Db::name('auth_rule')->field('id,name,title,type,condition,pid,sort,is_show,icon')->where('id',$id)->find();
-			$pidData = \think\Db::query('select id,title,path,concat(path,"-",id) as bpath from auth_rule where status=1 and type=1 and is_show=1 order by bpath');
+			$pidData = \think\Db::query('select id,title,path,concat(path,"-",id) as bpath from zi_auth_rule where status=1 and type=1 and is_show=1 order by bpath');
 			foreach ($pidData as $key => $value) {
 				$pidData[$key]['count'] = count(explode('-', $value['path']));
 			}
@@ -104,11 +104,11 @@ class AuthRule extends Base{
 		}
 		$ids = [$id];
 
-		$child1 = \think\Db::table('auth_rule')->field('id')->where('pid',$id)->select();
+		$child1 = \think\Db::name('auth_rule')->field('id')->where('pid',$id)->select();
 		if($child1){
 			foreach ($child1 as $key => $value) {
 				$ids[] = $value['id'];
-				$child2 = \think\Db::table('auth_rule')->field('id')->where('pid',$value['id'])->select();
+				$child2 = \think\Db::name('auth_rule')->field('id')->where('pid',$value['id'])->select();
 				if($child2){
 					foreach ($child2 as $k2 => $v2) {
 						$ids[] = $v2['id'];
@@ -117,13 +117,13 @@ class AuthRule extends Base{
 			}
 		}
 		
-		\think\Db::table('auth_rule')->where('id','in',$ids)->delete();
+		\think\Db::name('auth_rule')->where('id','in',$ids)->delete();
 
-		$rules = \think\Db::table('auth_group')->field('id,rules')->select();
+		$rules = \think\Db::name('auth_group')->field('id,rules')->select();
 		foreach ($rules as $rule) {
 			$rulesArr = explode(',', $rule['rules']);
 			$rules = implode(',', array_diff($rulesArr, $ids));
-			\think\Db::table('auth_group')->where('id', $rule['id'])->update(['rules'=>$rules]);
+			\think\Db::name('auth_group')->where('id', $rule['id'])->update(['rules'=>$rules]);
 		}
 		$this->getSidebar();
 		session('_auth_list_'.session('user_auth')['uid'].'1', null);

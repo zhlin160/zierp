@@ -45,5 +45,21 @@
 
 	{include file="public/script" /}
     {block name="script"}{/block}
+    <script>
+        $('#logout').click(function(){
+            layer.confirm('您正的要退出系统吗？', {
+                btn: ['确定','取消'] //按钮
+            }, function(){
+                $.get('{:url("User/logout")}',function(data){
+                    if(data.code == '0'){
+                        layer.msg(data.msg,{time:1000,end:function(){
+                            window.location.href = '{:url("Login/index")}'
+                        }})
+                    }
+                })
+            }, function(){
+            });
+        })
+    </script>
 </body>
 </html>

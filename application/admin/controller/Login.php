@@ -16,21 +16,19 @@ class Login extends Controller{
 			$password = input('post.password');
 			$code = input('post.code');
 			if(!$code){
-				return $this->error('请填写验证码');
+                return json(['code'=>'-1','msg'=>'请填写验证码']);
 			}
-			$phrase = session('phrase');
-			session('phrase', null);
-			if($phrase != $code){
-				return $this->error('验证码错误');
-			}
+			if(!captcha_check($code)){
+                return json(['code'=>'-2','msg'=>'验证码错误']);
+            }
 			if(!$username || !$password){
-				return $this->error('请填写用户名或密码');
+                return json(['code'=>'-3','msg'=>'请填写用户名或密码']);
 			}
 			$user = new UserApi;
 			$uid = $user->login($username, $password);
 			if($uid>0){
 				/*记录session和cookie*/
-				$group_id = \think\Db::table('auth_group_access')->field('group_id')->where('uid',$uid)->find();
+				$group_id = \think\Db::name('auth_group_access')->field('group_id')->where('uid',$uid)->find();
 				$auth = [
 					'uid'=>$uid,
 					'group_id'=>$group_id['group_id'],
@@ -39,7 +37,7 @@ class Login extends Controller{
 				];
 				session('user_auth',$auth);
 				session('user_auth_sign', data_auth_sign($auth));
-				return $this->success('登录成功','main/index');
+                return json(['code'=>'0','msg'=>'登录成功']);
 			}else{
 				switch ($uid) {
 					case '-1':
@@ -48,12 +46,12 @@ class Login extends Controller{
 					case '-2':
 						$error = '密码错误';
 						break;
-					
+
 					default:
 						$error = '未知错误';
 						break;
 				}
-				return $this->error($error);
+                return json(['code'=>'-5','msg'=>$error]);
 			}
 		}else{
 			return view('index');

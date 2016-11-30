@@ -9,14 +9,14 @@
 
 namespace app\admin\api;
 use app\admin\api\Api;
-use app\admin\model\UcenterMember;
+use app\admin\model\AdminUser;
 
 class UserApi extends Api{
     /**
      * 构造方法，实例化操作模型
      */
     protected function _init(){
-        $this->model = new UcenterMember();
+        $this->model = new AdminUser();
     }
 
     /**
