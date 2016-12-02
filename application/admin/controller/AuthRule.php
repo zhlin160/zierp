@@ -25,7 +25,7 @@ class AuthRule extends Base{
 	 */
 	public function add(){
 		if(request()->isPost() && input('post.')){
-			$this->checkValidate();
+			//$this->checkValidate();
 			$authRuleModel = new AuthRuleModel;
 			if($authRuleModel->validate(true)->save(input('post.'))){
 				// 给管理员添加全部权限
@@ -63,7 +63,7 @@ class AuthRule extends Base{
 			if(in_array($id, explode(',', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17'))){
 				return $this->error('改权限不允许编辑');
 			}
-			$this->checkValidate();
+			//$this->checkValidate();
 			$authRuleModel = new AuthRuleModel;
 			if($authRuleModel->validate(true)->save(input('post.'), ['id'=>$id])){
 				$this->getSidebar();

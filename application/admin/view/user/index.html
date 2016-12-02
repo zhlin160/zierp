@@ -1,10 +1,23 @@
 {extend name="base/common" /} {block name="content"}
-<button type="button" tooltip="添加用户" class="btn btn-sm btn-azure btn-addon" onclick="javascript:window.location.href = '{:url('user/add')}'"> <i class="fa fa-plus"></i> Add
-</button>
+
 <div class="row">
     <div class="col-lg-12 col-sm-12 col-xs-12">
         <div class="widget">
+            <div class="widget-header ">
+                <span class="widget-caption">用户管理</span>
+                <div class="widget-buttons">
+                    <a href="#" data-toggle="maximize">
+                        <i class="fa fa-expand"></i>
+                    </a>
+                    <a href="#" data-toggle="collapse">
+                        <i class="fa fa-minus"></i>
+                    </a>
+                </div>
+            </div>
             <div class="widget-body">
+                <div class="highlight">
+                    <button class="btn btn-blue" onclick="javascript:window.location.href = '{:url('user/add')}'"><i class="fa fa-plus"></i>添加角色</button>
+                </div>
                 <div class="flip-scroll">
                     <table class="table table-bordered table-hover">
                         <thead class="">

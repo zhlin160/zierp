@@ -1,0 +1,217 @@
+<style>
+    .form-control{ height:33px;}
+</style>
+<from id="supplierFrom" class="form-horizontal" method="post" >
+    <div>
+    <div class=" from-margin-a">
+        <label for="categoryId" class="col-sm-2 control-label no-padding-right"><i class="red">*</i> 分类</label>
+        <div class="col-sm-4">
+            <select name="categoryId" style="width: 100%;" id="categoryId" required>
+                {volist name="category" id="vo"}
+                <option value="{$vo.id}">{$vo.name}</option>
+                {/volist}
+            </select>
+        </div>
+
+        <label for="code" class="col-sm-2 control-label no-padding-left"><i class="red">*</i> 编码</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="code" placeholder="" name="code" value="" required>
+        </div>
+    </div>
+
+    <div class="from-group from-margin-a">
+        <label for="name1" class="col-sm-2 control-label no-padding-right from-margin-a"><i class="red">*</i> 供应商</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control from-margin-a" id="name1" placeholder="" name="name" value="" required>
+        </div>
+    </div>
+
+    <div class="from-group from-margin-a">
+        <label for="address" class="col-sm-2 control-label no-padding-right">地址</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="address" placeholder="" name="address" value="" >
+        </div>
+    </div>
+
+    <div class="from-group from-margin-a">
+        <label for="contact01" class="col-sm-2 control-label no-padding-right from-margin-a">联系人</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control from-margin-a" id="contact01" placeholder="" name="contact01" value="" >
+        </div>
+
+        <label for="mobile01" class="col-sm-2 control-label no-padding-left from-margin-a">手机</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control from-margin-a" id="mobile01" placeholder="" name="mobile01" value="" >
+        </div>
+    </div>
+
+    <div class="from-group from-margin-a">
+        <label for="tel01" class="col-sm-2 control-label no-padding-right ">固话</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control " id="tel01" placeholder="" name="tel01" value="" >
+        </div>
+
+        <label for="qq01" class="col-sm-2 control-label no-padding-left ">Q Q</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control " id="qq01" placeholder="" name="qq01" value="" >
+        </div>
+    </div>
+
+    <div class="from-group from-margin-a">
+        <label for="contact02" class="col-sm-2 control-label no-padding-right from-margin-a">备用联系人</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control from-margin-a" id="contact02" placeholder="" name="contact02" value="" >
+        </div>
+
+        <label for="mobile02" class="col-sm-2 control-label no-padding-left from-margin-a">备用联系人手机</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control from-margin-a" id="mobile02" placeholder="" name="mobile02" value="" >
+        </div>
+    </div>
+
+    <div class="from-group from-margin-a">
+        <label for="tel02" class="col-sm-2 control-label no-padding-right from-margin-a">备用联系人固话</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control from-margin-a" id="tel02" placeholder="" name="tel02" value="" >
+        </div>
+
+        <label for="qq02" class="col-sm-2 control-label no-padding-left from-margin-a">备用联系人QQ</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control from-margin-a" id="qq02" placeholder="" name="qq02" value="" >
+        </div>
+    </div>
+
+    <div class="from-group from-margin-a">
+        <label for="addressShipping" class="col-sm-2 control-label no-padding-right">发货地址</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="addressShipping" placeholder="" name="addressShipping" value="" >
+        </div>
+    </div>
+
+    <div class="from-group from-margin-a">
+        <label for="bankName" class="col-sm-2 control-label no-padding-right from-margin-a">开户行</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control from-margin-a" id="bankName" placeholder="" name="bankName" value="" >
+        </div>
+
+        <label for="bankAccount" class="col-sm-2 control-label no-padding-left from-margin-a">开户行账号</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control from-margin-a" id="bankAccount" placeholder="" name="bankAccount" value="" >
+        </div>
+    </div>
+
+    <div class="from-group from-margin-a">
+        <label for="tax" class="col-sm-2 control-label no-padding-right ">税号</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control " id="tax" placeholder="" name="tax" value="" >
+        </div>
+
+        <label for="fax" class="col-sm-2 control-label no-padding-left ">传真</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control " id="fax" placeholder="" name="fax" value="" >
+        </div>
+    </div>
+
+    <div class="from-group from-margin-a">
+        <label for="initPayables" class="col-sm-2 control-label no-padding-right from-margin-a">应付期初余额</label>
+        <div class="col-sm-4">
+            <input type="number" class="form-control from-margin-a" id="initPayables" placeholder="" name="initPayables" value="" >
+        </div>
+
+        <label for="initPayablesDT" class="col-sm-2 control-label no-padding-left from-margin-a " >余额日期</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control from-margin-a date-picker" id="initPayablesDT" placeholder="" name="initPayablesDT" value="" onClick="WdatePicker()" readonly>
+        </div>
+    </div>
+
+    <div class="from-group from-margin-a">
+        <label for="note" class="col-sm-2 control-label no-padding-right">备注</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control " id="note" placeholder="" name="note" value="" >
+        </div>
+    </div>
+
+    <div class="from-group from-margin-a">
+        <div class="col-sm-12">
+            <input type="button" value="关闭" class="btn btn-default from-margin-a" id="close" style="float:right;">
+            <input type="button" value="保存" class="btn btn-blue from-margin-a" id="submit" style="float:right;margin-right: 10px;">
+        </div>
+    </div>
+    </div>
+</from>
+
+<script src="/assets/js/validation/bootstrapValidator.min.js"></script>
+<script src="/assets/js/validation/zh_CN.js"></script>
+<script src="/assets/js/datePicker/WdatePicker.js"></script>
+
+<script>
+
+
+    $("#close").click(function(){
+        parent.layer.closeAll();
+    })
+    //验证
+    $(function(){
+        $("#supplierFrom").bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields:{
+                categoryId:{
+                    validators:{
+                        notEmpty:{
+                            message:'供应商类型不能为空！'
+                        }
+                    }
+                },
+                code:{
+                    validators:{
+                        notEmpty:{
+                            message:'供应商编码不能为空'
+                        },
+                        regexp:{
+                            regexp:/\d{3,}/,
+                            message:'供应商只能是数字'
+                        }
+                    }
+                },
+                name:{
+                    validators:{
+                        notEmpty:{
+                            message:'供应商名称不能为空'
+                        },
+                        stringLength:{
+                            min:3,
+                            message:'供应商名称不能少与3个字符'
+                        }
+                    }
+                }
+            },
+        })
+
+        $("#supplierFrom").submit(function(ev){ev.preventDefault();});
+        $("#submit").on("click", function(){
+            var bootstrapValidator = $("#supplierFrom").data('bootstrapValidator');
+            bootstrapValidator.validate();
+            if(bootstrapValidator.isValid()){
+                console.log($('#supplierFrom').serialize());
+                /*$.ajax({
+                    url:'{:url("Supplier/add")}',
+                    type:'post',
+                    data:$('#supplierFrom').serialize(),
+                    success:function(data){
+                        console.log(data)
+                    }
+                })*/
+            } else{
+                return;
+            }
+        });
+
+    })
+
+
+</script>

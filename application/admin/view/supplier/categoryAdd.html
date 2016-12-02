@@ -1,0 +1,66 @@
+<from id="from1" class="form-horizontal" role="form">
+    <div class="from-group from-margin-a">
+        <label for="code" class="col-sm-2 control-label no-padding-right">分类编码</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="code" placeholder="" name="code" value="" required>
+        </div>
+    </div>
+    <p style="height: 10px;"></p>
+    <div class="from-group from-margin-a">
+        <label for="name" class="col-sm-2 control-label no-padding-right">分类名称</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control from-margin-a" id="name" placeholder="" name="name" value="" required>
+        </div>
+    </div>
+    <div class="from-group from-margin-a">
+        <div class="col-sm-12">
+            <input type="button" value="关闭" class="btn btn-default" id="close" style="float:right;">
+            <input type="button" value="保存" class="btn btn-blue" id="submit" style="float:right;margin-right: 10px;">
+        </div>
+    </div>
+
+</from>
+
+<script>
+    $("#close").click(function(){
+        parent.layer.closeAll();
+    })
+    //提交表单
+    $("#submit").click(function(){
+        var code = $('input[name="code"]').val();
+        var name = $('input[name="name"]').val();
+
+        if(code == ''){
+            parent.layer.msg('供应商分类编码不能为空！');
+            return false;
+        }
+        if(!/^\d+$/.test(code)){
+            parent.layer.msg('供应商分类编码只能是数字！');
+            return false;
+        }
+        if(name == ''){
+            parent.layer.msg('供应商分类名称不能为空！');
+            return false;
+        }
+
+        $.ajax({
+            url:"{:url('Supplier/categoryAdd')}",
+            type:'post',
+            data:{
+                'code': code,'name':name
+            },
+            success:function(data){
+                if(data.code == '0'){
+                    parent.layer.msg(data.msg,{end:function(){
+                        parent.location.reload();
+                    }})
+                }else{
+                    parent.layer.msg(data.msg,{end:function(){
+                        parent.location.reload();
+                    }})
+                }
+            }
+        })
+
+    })
+</script>

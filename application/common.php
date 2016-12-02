@@ -115,3 +115,13 @@ function data_auth_sign($data) {
     $sign = sha1($code); //生成签名
     return $sign;
 }
+
+function admin_log($content){
+    $data = [
+        'username'=>session('user_auth.username'),
+        'ip'=>get_client_ip(),
+        'content'=>$content,
+        'time'=>time()
+    ];
+    \Think\Db::name('admin_log')->insert($data);
+}

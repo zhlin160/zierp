@@ -1,0 +1,115 @@
+{extend name="base/common" /}
+
+{block name="content"}
+
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="widget">
+            <div class="widget-header ">
+                <span class="widget-caption">仓库</span>
+                <div class="widget-buttons">
+                    <a href="#" data-toggle="maximize">
+                        <i class="fa fa-expand"></i>
+                    </a>
+                    <a href="#" data-toggle="collapse">
+                        <i class="fa fa-minus"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="widget-body">
+                <div class="highlight">
+                    <button class="btn btn-blue" id="add"><i class="fa fa-plus"></i>新增仓库</button>
+                    <button class="btn btn-blue" id="edit"><i class="fa fa-pencil-square-o"></i>编辑仓库</button>
+                    <button class="btn btn-blue"><i class="fa fa-minus-circle"></i>删除仓库</button>
+                </div>
+                <div class="flip-scroll">
+                    <table class="table table-bordered table-hover">
+                        <thead class="">
+                        <tr>
+                            <th class="text-center">仓库编码</th>
+                            <th class="text-center">仓库名称</th>
+                            <th class="text-center">创建时间</th>
+                            <th class="text-center">操作</th>
+                        </tr>
+                        {volist name="ware" id="vo"}
+                            <tr>
+                                <td class="text-center">{$vo.code}</td>
+                                <td class="text-center">{$vo.name}</td>
+                                <td class="text-center">{$vo.create_time|date="Y-m-d H:i",###}</td>
+                                <td class="text-center">
+                                    <button class="btn btn-blue btn-sm wareedit" data="{$vo.id}"><i class="fa fa-pencil-square-o"></i>编辑仓库</button>
+                                    <button class="btn btn-danger btn-sm waredel" data="{$vo.id}"><i class="fa fa-trash-o"></i>删除仓库</button>
+                                </td>
+                            </tr>
+                        {/volist}
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script>
+    //增加仓库
+    $('#add').click(function(){
+        var index = layer.load(0, {shade: false});
+        $.get('{:url("Warehouse/add")}',function (data) {
+            layer.close(index);
+            if(data){
+                layer.open({
+                    type: 1,
+                    title:'新增仓库',
+                    area: ['420px', '190px'], //宽高
+                    content: data
+                });
+            }
+        })
+    })
+
+    //编辑仓库
+    $('.wareedit').click(function(){
+        var id = $(this).attr('data');
+        $.get('{:url("Warehouse/edit")}/id/'+id,function (data) {
+            if(typeof(data.code) == 'undefined'){
+                layer.open({
+                    type: 1,
+                    title:'编辑仓库',
+                    area: ['420px', '190px'], //宽高
+                    content: data
+                });
+            }else{
+                layer.msg(data.msg);
+            }
+        })
+    })
+
+    //删除仓库
+    $('.waredel').click(function(){
+        var id = $(this).attr('data');
+        layer.confirm('您真的要删除这个仓库吗？', {
+            btn: ['确定','取消'] //按钮
+        }, function(){
+            $.get('{:url("Warehouse/del")}/id/'+id,function (data) {
+                if(data.code == '0'){
+                    layer.msg(data.msg,{time:2000,end:function () {
+                        window.location.reload();
+                    }})
+                }else{
+                    layer.msg(data.msg,{time:2000,end:function () {
+                        window.location.reload();
+                    }})
+                }
+            })
+        }, function(){
+        });
+
+    })
+
+</script>
+{/block}
+

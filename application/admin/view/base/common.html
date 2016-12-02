@@ -53,7 +53,7 @@
                 $.get('{:url("User/logout")}',function(data){
                     if(data.code == '0'){
                         layer.msg(data.msg,{time:1000,end:function(){
-                            window.location.href = '{:url("Login/index")}'
+                            window.location.h = '{:url("Login/index")}'
                         }})
                     }
                 })

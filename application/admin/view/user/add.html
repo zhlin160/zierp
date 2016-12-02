@@ -19,7 +19,7 @@
                         <div class="form-group">
                             <label for="group_id" class="col-sm-2 control-label no-padding-right">用户角色</label>
                             <div class="col-sm-6">
-                                <select name="group_id" style="width: 100%;">
+                                <select name="group_id" style="width: 100%;" id="group_id">
                                     {volist name="authGroupData" id="vo"}
                                     <option value="{$vo.id}">{$vo.title}</option>
                                     {/volist}
